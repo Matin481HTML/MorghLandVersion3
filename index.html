@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وضعیت سرور ماینکرافت</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-sans flex flex-col items-center justify-center min-h-screen p-4">
+
+    <div class="bg-gray-800 p-8 rounded-xl shadow-lg border-2 border-gray-700 max-w-lg w-full">
+        <h1 class="text-3xl md:text-4xl font-bold mb-4">وضعیت سرور ماینکرافت</h1>
+        
+        <div class="flex flex-col items-center space-y-4">
+            <div class="bg-gray-700 p-4 rounded-lg w-full">
+                <p class="text-lg md:text-xl font-medium">وضعیت سرور: <span id="serverStatus" class="font-bold text-gray-400">در حال بررسی...</span></p>
+                <div id="statusIndicator" class="w-4 h-4 rounded-full mx-auto mt-2 bg-gray-400"></div>
+            </div>
+
+            <button id="refreshButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-200 shadow-md">
+                بروزرسانی وضعیت
+            </button>
+            <p id="lastUpdated" class="text-sm text-gray-500 mt-2">آخرین بروزرسانی: -</p>
+        </div>
+    </div>
+
+    <script>
+    
+        
+        const serverAddress = "MorghLandVersion3.aternos.me:39995"; 
+
+        async function fetchServerStatus() {
+            const statusElement = document.getElementById('serverStatus');
+            const indicatorElement = document.getElementById('statusIndicator');
+            const lastUpdatedElement = document.getElementById('lastUpdated');
+
+            statusElement.textContent = "در حال بررسی...";
+            statusElement.className = "font-bold text-gray-400";
+            indicatorElement.className = "w-4 h-4 rounded-full mx-auto mt-2 bg-gray-400";
+
+            try {
+                
+                
+                const apiUrl = `https://api.aternosapi.com/server/${serverAddress}`;
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.online) {
+                    statusElement.textContent = "آنلاین";
+                    statusElement.className = "font-bold text-green-500";
+                    indicatorElement.className = "w-4 h-4 rounded-full mx-auto mt-2 bg-green-500 animate-pulse";
+                } else {
+                    statusElement.textContent = "آفلاین";
+                    statusElement.className = "font-bold text-red-500";
+                    indicatorElement.className = "w-4 h-4 rounded-full mx-auto mt-2 bg-red-500";
+                }
+
+                lastUpdatedElement.textContent = `آخرین بروزرسانی: ${new Date().toLocaleTimeString()}`;
+
+            } catch (error) {
+                console.error("خطا در دریافت وضعیت سرور:", error);
+                statusElement.textContent = "خطا در دریافت اطلاعات";
+                statusElement.className = "font-bold text-gray-400";
+                indicatorElement.className = "w-4 h-4 rounded-full mx-auto mt-2 bg-gray-400";
+            }
+        }
+
+        
+        window.onload = () => {
+            fetchServerStatus();
+            
+            setInterval(fetchServerStatus, 10000); 
+
+            
+            document.getElementById('refreshButton').addEventListener('click', fetchServerStatus);
+        };
+    </script>
+</body>
+</html>
