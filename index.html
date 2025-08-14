@@ -1,1 +1,245 @@
-.
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MorghLandVersion3</title>
+    <link rel="site icon" href="https://s6.uupload.ir/files/japan-background-digital-art_zlp.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+            
+            background: url('https://s6.uupload.ir/files/japan-background-digital-art_zlp.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(15, 15, 15, 0.8);
+            padding: 50px 60px;
+            border-radius: 20px;
+            border: 3px solid #8B4513; 
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
+            max-width: 90%;
+            transition: transform 0.3s ease-in-out;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+        }
+        .title {
+            font-size: 3em;
+            margin-bottom: 25px;
+            color: #FFD700; 
+            letter-spacing: 2px;
+        }
+        .status-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .card-header h2 {
+            font-size: 1.8em;
+            margin-top: 0;
+            color: #fff;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+        }
+        .card-body {
+            margin-top: 20px;
+        }
+        .status {
+            font-size: 2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .status-icon {
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 15px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .online .status-icon {
+            background-color: #00ff00; 
+        }
+        .online .status-text {
+            color: #00ff00;
+        }
+        .offline .status-icon {
+            background-color: #ff0000; 
+        }
+        .offline .status-text {
+            color: #ff0000;
+        }
+        .players-info {
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        
+        .cherry-tree-icon {
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+        }
+        
+        .players-count {
+            font-weight: bold;
+            color: #00ffff;
+        }
+        .join-info {
+            margin-top: 40px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+        }
+        .join-info h3 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #fff;
+        }
+        .server-address {
+            font-family: monospace;
+            font-size: 1.4em;
+            margin-top: 10px;
+            color: #aaffaa;
+            word-break: break-all;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px;
+            }
+            .title {
+                font-size: 2em;
+            }
+            .status {
+                font-size: 1.5em;
+            }
+            .players-info {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">MorghLandVersion3</h1>
+        <div class="status-card">
+            <div class="card-header">
+                <h2 id="motd">...</h2>
+            </div>
+            <div class="card-body">
+                <div class="status" id="server-status">
+                    <span class="status-icon"></span>
+                    <span class="status-text">درحال بررسی وضعیت...</span>
+                </div>
+                <div class="players-info">
+                   
+                    <svg class="cherry-tree-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      
+                      <rect x="7" y="8" width="2" height="8" fill="#5F3B20"/>
+                    
+                      <rect x="4" y="5" width="8" height="3" fill="#FFC0CB"/>
+                      <rect x="3" y="4" width="10" height="3" fill="#FFC0CB"/>
+                      <rect x="5" y="3" width="6" height="3" fill="#FFC0CB"/>
+                      <rect x="6" y="2" width="4" height="3" fill="#FFC0CB"/>
+                    </svg>
+                    <p>تعداد پلیرهای آنلاین: <span class="players-count" id="players-online">0</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="join-info">
+            <h3>آدرس سرور:</h3>
+            <p class="server-address" id="server-address-display">MorghLandVersion3.aternos.me:39995</p>
+        </div>
+    </div>
+
+    <script>
+        
+        const serverIp = "MorghLandVersion3.aternos.me";
+        const serverPort = 39995;
+        const apiUrl = `https://api.mcsrvstat.us/2/${serverIp}`;
+
+        
+        const statusCard = document.getElementById('server-status');
+        const statusText = statusCard.querySelector('.status-text');
+        const playersOnlineEl = document.getElementById('players-online');
+        const motdEl = document.getElementById('motd');
+        const serverAddressEl = document.getElementById('server-address-display');
+
+        
+        async function updateServerStatus() {
+            try {
+                
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                
+                if (data.online && data.players.online > 0) {
+                    statusCard.classList.remove('offline');
+                    statusCard.classList.add('online');
+                    statusText.textContent = "سرور آنلاین است!";
+                    
+                    
+                    playersOnlineEl.textContent = data.players.online;
+                    motdEl.textContent = data.motd.clean.join(" ") || "MorghLand Server";
+
+                } else {
+                    
+                    statusCard.classList.remove('online');
+                    statusCard.classList.add('offline');
+                    statusText.textContent = "سرور آفلاین است.";
+                    playersOnlineEl.textContent = "0";
+                    motdEl.textContent = "سرور آفلاین است.";
+                }
+            } catch (error) {
+                
+                console.error("خطا در دریافت اطلاعات سرور:", error);
+                statusCard.classList.remove('online');
+                statusCard.classList.add('offline');
+                statusText.textContent = "خطا در برقراری ارتباط.";
+                playersOnlineEl.textContent = "0";
+                motdEl.textContent = "خطا در برقراری ارتباط.";
+            }
+        }
+
+        
+        serverAddressEl.textContent = `${serverIp}:${serverPort}`;
+
+        
+        setInterval(updateServerStatus, 1000);
+
+        
+        updateServerStatus();
+    </script>
+</body>
+</html>
