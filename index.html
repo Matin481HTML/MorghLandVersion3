@@ -103,7 +103,7 @@
             margin-top: 20px;
         }
         
-        
+ 
         .cherry-tree-icon {
             width: 40px;
             height: 40px;
@@ -152,7 +152,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="title">MorghLandVersion3</h1>
+        <strong><h1 class="title">MorghLandVersion3</h1></strong>
         <div class="status-card">
             <div class="card-header">
                 <h2 id="motd">...</h2>
@@ -163,11 +163,11 @@
                     <span class="status-text">درحال بررسی وضعیت...</span>
                 </div>
                 <div class="players-info">
-                   
+                    
                     <svg class="cherry-tree-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       
                       <rect x="7" y="8" width="2" height="8" fill="#5F3B20"/>
-                    
+                      
                       <rect x="4" y="5" width="8" height="3" fill="#FFC0CB"/>
                       <rect x="3" y="4" width="10" height="3" fill="#FFC0CB"/>
                       <rect x="5" y="3" width="6" height="3" fill="#FFC0CB"/>
@@ -184,7 +184,26 @@
     </div>
 
     <script>
+    
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
         
+        document.addEventListener('keydown', event => {
+            
+            if (event.key === 'F12') {
+                event.preventDefault();
+            }
+            
+            if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'C' || event.key === 'J')) {
+                event.preventDefault();
+            }
+            
+            if (event.ctrlKey && event.key === 'U') {
+                event.preventDefault();
+            }
+        });
+        
+       
         const serverIp = "MorghLandVersion3.aternos.me";
         const serverPort = 39995;
         const apiUrl = `https://api.mcsrvstat.us/2/${serverIp}`;
